@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>SANY - Разработка карты</title>
+	<!--
+	Укажите свой API-ключ и замените строку подключения API карт.
+	Получить ключ можно здесь: https://developer.tech.yandex.ru/keys/
+	<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=<ваш API-ключ>"></script>
+	-->
+	<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+	<script src="regions.js"></script>
+	<script src="ymaps.js"></script>
+	<style>
+		@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600,700&subset=cyrillic&display=swap);
+		*,
+		*:before,
+		*:after {
+			margin: 0;
+			padding: 0;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		body {
+			position: relative;
+			background: #FFF;
+			color: #616161;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 15px;
+			line-height: 21px;
+		}
+		a {
+			color: #131315;
+			text-decoration: none;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+			border: none;
+		}
+		a:hover {
+			color: #e60012;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-weight: bold;
+			color: #131315;
+		}
+		.wrapper {
+			position: relative;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			width: 100%;
+			min-height: 100vh;
+		    padding: 0 0 70px;
+    		background: #f3f3f3;
+			overflow: hidden;
+		}
+		.container {
+			width: 100%;
+			padding: 0 15px;
+			margin: 0 auto;
+		}
+		@media screen and (min-width: 576px) {
+			.container {
+				max-width: 576px;
+			}
+		}
+		@media screen and (min-width: 768px) {
+			.container {
+				max-width: 750px;
+			}
+		}
+		@media screen and (min-width: 992px) {
+			.container {
+				max-width: 970px;
+			}
+		}
+		@media screen and (min-width: 1200px) {
+			.container {
+				max-width: 1170px;
+			}
+		}
+		.contacts-map {
+			width: 100%;
+			height: 600px;
+			margin-bottom: 50px;
+		}
+		@media screen and (max-width: 991px) {
+			.contacts-map {
+				height: 450px;
+			}
+		}
+		@media screen and (max-width: 575px) {
+			.contacts-map {
+				height: 370px;
+			}
+		}
+		.contacts-cards-list {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			width: calc(100% + 30px);
+			margin-left: -15px;
+			margin-right: -15px;
+			margin-bottom: -30px;
+			-webkit-box-align: stretch;
+			-ms-flex-align: stretch;
+			align-items: stretch;
+		}
+		.contacts-cards-list>.contacts-item {
+			padding: 0 15px;
+			width: 50%;
+			margin-bottom: 30px;
+		}
+		@media screen and (max-width: 767px) {
+			.contacts-cards-list>.contacts-item {
+			    width: 100%;
+			}
+		}
+		.contacts-card {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			width: 100%;
+			height: 100%;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			padding: 25px;
+			background: #fff;
+			border-radius: 7px;
+		}
+		.contacts-region {
+			padding-bottom: 50px;
+		}
+		.contacts-region h2 {
+			padding-bottom: 30px;
+		}
+		.contacts-card h4,
+		.contacts-card {
+			padding-bottom: 15px;
+		}
+		.contacts-card h4 {
+			font-size: 18px;
+			line-height: 24px;
+			font-weight: bold;
+		}
+		.contacts-card p {
+			padding-bottom: 5px;
+			font-size: 15px;
+			line-height: 21px;
+			color: #616161;
+		}
+		.contacts-card ul {
+			list-style-position: inside;
+		}
+		ymaps .contacts-card {
+			padding: 0;
+		}
+		ymaps .contacts-card h4 {
+			font-size: 14px;
+			padding-bottom: 10px;
+		}
+		ymaps .contacts-card p,
+		ymaps .contacts-card ul li {
+			color: #131315;
+			font-size: 12px;
+			line-height: 14px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<section class="section-map">
+			<div id="map" class="contacts-map"></div>
+			<div class="container">
+				<div class="contacts-list">
+					<div class="contacts-region">
+						<h2>Центральный округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Москва" data-coords="55.659495, 37.516171">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>119421, г. Москва, ул. Обручева, д. 13Б</p>
+									<p><a href="tel:+74956627788">+7 (495) 662-77-88</a>
+									</p>
+									<p><a href="mailto:psk@psk-holding.ru">psk@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Липецк" data-coords="52.657311, 39.613135">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>389027, г. Липецк, ул. Ковалева, владение 125 (район Цемзавода)</p>
+									<p><a href="tel:+74742565588">+7 (4742) 56-55-88</a> (многоканальный)</p>
+									<p><a href="mailto:lipetsk@psk-holding.ru">lipetsk@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Мытищи" data-coords="55.901263, 37.629367">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «Мерко Руссланд»</h4>
+									<p>141031, МО, г. Мытищи, пос. Нагорное, ул. Центральная, вл. 3, с. 3, пом. 3</p>
+									<p><a href="tel:+74959695869">+7 (495) 969-58-69</a>
+									</p>
+									<p><a href="mailto:sales@merko-russland.com">sales@merko-russland.com</a>
+									</p>
+									<p><a href="https://merko-russland.com/">https://merko-russland.com/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Асфальтобетонные заводы</li>
+										<li>Бетоносмесительные установки</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Москва" data-coords="55.868556, 37.403331">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «САНИ»</h4>
+									<p>143441, г. Москва, МО, 69 км МКАД (внешняя сторона), к23, 3-й этаж (БЦ «Гринвуд»)</p>
+									<p>Представитель SANY</p>
+									<p><a href="tel:+79689606812">+7 (968) 960-68-12</a>, <a href="mailto:lai.yj@sanyrus.com">lai.yj@sanyrus.com</a>
+									</p>
+									<p><a href="tel:+79266785411">+7 (926) 678-54-11</a>, <a href="mailto:a.nikolaev@sanyrus.com">a.nikolaev@sanyrus.com</a>
+									</p>
+									<p><a href="tel:+79250516568">+7 (925) 051-65-68</a>, <a href="mailto:m.lavrikov@sanyrus.com">m.lavrikov@sanyrus.com</a>
+									</p>
+									<p><a href="tel:+79853839862">+7 (985) 383-98-62</a>, <a href="mailto:slava@sany.com.cn">slava@sany.com.cn</a>
+									</p>
+									<p><a href="tel:+79645358678">+7 (964) 535-86-78</a>, <a href="mailto:Sergey.zavyalov@sanygroup.com">Sergey.zavyalov@sanygroup.com</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contacts-region">
+						<h2>Северо-Западный округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Санкт-Петербург" data-coords="59.911209, 30.270350">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>190020, г. Санкт-Петербург, ул. Курляндская, д. 44, офис 45</p>
+									<p><a href="tel:+78122518441">+7 (812) 251-84-41</a></p>
+									<p><a href="tel:+78122518778">+7 (812) 251-87-78</a></p>
+									<p><a href="tel:+78122519970">+7 (812) 251-99-70</a></p>
+									<p><a href="tel:+78122519970">+7 (812) 251-87-06</a></p>
+									<p><a href="mailto:psk-spb@psk-holding.ru">psk-spb@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Санкт-Петербург" data-coords="59.912937, 30.350202">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «САНИ»</h4>
+									<p>192007, г. Санкт-Петербург, пр. Лиговский, д. 150</p>
+									<p>Представитель SANY</p>
+									<p><a href="tel:+79992220529">+7 (999) 222-05-29</a>
+									</p>
+									<p><a href="mailto:diao.zb@sanyrus.com">diao.zb@sanyrus.com</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contacts-region">
+						<h2>Южный округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Краснодар" data-coords="45.035808, 39.065091">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>350059, г. Краснодар, ул. Уральская, д. 85</p>
+									<p><a href="tel:+78612790129">+7 (861) 279-01-29</a>, <a href="tel:+78612368553">236-85-53</a>
+									</p>
+									<p><a href="mailto:psk-kuban@psk-holding.ru">psk-kuban@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Волгоград" data-coords="48.772015, 44.462681">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>400075, г. Волгоград, ул. Домостроителей, д. 13</p>
+									<p><a href="tel:+78442781879">+7 (844) 278-18-79</a>
+									</p>
+									<p><a href="mailto:volgograd@psk-holding.ru">volgograd@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Краснодар" data-coords="44.891753, 38.835302">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «РУСТЕХЦЕНТР»</h4>
+									<p>353235, г. Краснодар, п. Афипский, ул. Привокзальная, д.9А</p>
+									<p><a href="tel:+78612790808">+7-861-279-08-08</a>
+									</p>
+									<p><a href="mailto:info@rtc-holding.com">info@rtc-holding.com</a>
+									</p>
+									<p><a href="www.sant-rf.com">www.sant-rf.com</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Буровые установки</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contacts-region">
+						<h2>Приволжский округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Казань" data-coords="55.822377, 49.201330">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>420088, г. Казань, ул. 1-я Владимирская, д. 106</p>
+									<p><a href="tel:+78005001520">+7 (800) 500-15-20</a>, <a href="tel:+78435370505">+7 (843) 537-05-05</a>
+									</p>
+									<p><a href="mailto:psk-vostok@psk-holding.ru">psk-vostok@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a> 
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Нижний Новгород" data-coords="56.354512, 43.801566">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>603127, г. Нижний Новгород, ул. Коновалова, д. 10А (304, 305)</p>
+									<p><a href="tel:+78312613733">+7 (831) 261-37-33</a>, <a href="tel:+78005001520">+7 (800) 500-15-20</a>
+									</p>
+									<p><a href="mailto:nn@psk-holding.ru">nn@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Самара" data-coords="53.234432, 50.293610">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>443109, г. Самара, ул. Товарная, д. 5 ст. 1, офис 305</p>
+									<p><a href="tel:+78463120555">+7 (846) 312-05-55</a>, <a href="tel:+78469584288">958-42-88</a>
+									</p>
+									<p><a href="mailto:samara@psk-holding.ru">samara@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Саратов" data-coords="51.558268, 46.019982">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>410010, г. Саратов, Пугачёвский 1-й пос, 21в/1</p>
+									<p><a href="tel:+78452692760">+7 (845) 269-27-60</a>, <a href="tel:+79649877982">+7 (964) 987-79-82</a>
+									</p>
+									<p><a href="mailto:saratov@psk-holding.ru">saratov@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Тольятти" data-coords="53.568621, 49.300333">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>445033, г. Тольятти, ул. Вокзальная, д. 44, офис 207</p>
+									<p><a href="tel:+78482635505">+7 (8482) 635-505</a>, <a href="tel:+78482635853">635-853</a>, <a href="tel:+78482635859">635-859</a>
+									</p>
+									<p><a href="mailto:psv@psk-holding.ru">psv@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Уфа" data-coords="54.753025, 56.014108">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>450000, г. Уфа, ул. Ростовская, д.1 8, этаж 5, офис 502</p>
+									<p><a href="tel:+73472460945">+7 (347) 246-09-45</a>, <a href="tel:+73472925666">29-25-666</a>
+									</p>
+									<p><a href="mailto:ufa@psk-holding.ru">ufa@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Казань" data-coords="55.802330, 49.271318">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «САНИ»</h4>
+									<p>420025, г. Казань, ул. Мамадышский тракт, д. 55а</p>
+									<p>Представитель SANY</p>
+									<p><a href="tel:+79178521154">+7 (917) 852-11-54</a>
+									</p>
+									<p><a href="mailto:a.ivanov@sanyrus.com">a.ivanov@sanyrus.com</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contacts-region">
+						<h2>Уральский округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Екатеринбург" data-coords="56.834895, 60.542507">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>620131, г. Екатеринбург, ул. Викулова, д. 26А</p>
+									<p><a href="tel:+73432315735">+7 (343) 231-57-35</a>
+									</p>
+									<p><a href="mailto:psk-ural@psk-holding.ru">psk-ural@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Тюмень" data-coords="57.155914, 65.675157">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>625034, г. Тюмень, ул. Камчатская, д. 194, стр. 5</p>
+									<p><a href="tel:+73452637793">+7 (3452) 63-77-93</a></p>
+									<p><a href="tel:+73452637795">+7 (3452) 63-77-95</a></p>
+									<p><a href="tel:+73452637719">+7 (3452) 63-77-19</a></p>
+									<p><a href="mailto:tumen@psk-holding.ru">tumen@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="contacts-region">
+						<h2>Сибирский округ</h2>
+						<div class="contacts-cards-list">
+							<div class="contacts-item" data-city="Новосибирск" data-coords="54.993902, 82.869001">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>630108, г. Новосибирск, ул. Широкая, д. 1А, 4 этаж</p>
+									<p><a href="tel:+73833350669">+7 (383) 335-06-69</a></p>
+									<p><a href="tel:+73833350694">+7 (383) 335-06-94</a></p>
+									<p><a href="tel:+73833350695">+7 (383) 335-06-95</a></p>
+									<p><a href="tel:+73833350696">+7 (383) 335-06-96</a></p>
+									<p><a href="mailto:psk-sibir@psk-holding.ru">psk-sibir@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Хабаровск" data-coords="48.466730, 135.072366">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ПросСтройКонтракт»</h4>
+									<p>680000, г. Хабаровск, ул. Калинина д. 8</p>
+									<p><a href="tel:+74212476769">+7 (421) 247-67-69</a>
+									</p>
+									<p><a href="mailto:khabarovsk@psk-holding.ru">khabarovsk@psk-holding.ru</a>
+									</p>
+									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Автобетононасосы</li>
+										<li>Стационарные бетононасосы</li>
+										<li>Бетонораспределительные стрелы</li>
+										<li>Гусеничные краны</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Иркутск" data-coords="52.318774, 104.236517">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ШанхайСпеТехника»</h4>
+									<p>664024, г. Иркутск, ул. Трактовая, д. 14</p>
+									<p><a href="tel:+79149154242">+7 (914) 915-42-42</a>, <a href="tel:+79294399988">+7 (929) 439-99-88</a>
+									</p>
+									<p><a href="mailto:sany-sse38@mail.ru">sany-sse38@mail.ru</a>
+									</p>
+									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Экскаватор</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Чита" data-coords="52.080871, 113.486901">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ШанхайСпеТехника»</h4>
+									<p>675020, г. Чита, Объездное шоссе, д. 26</p>
+									<p><a href="tel:+78005509188">+7 (800) 550-91-88</a></p>
+									<p><a href="tel:+79248183999">+7 (924) 818-39-99</a></p>
+									<p><a href="tel:+79294816666">+7 (929) 481-66-66</a></p>
+									<p><a href="tel:+79242789888">+7 (924) 278-98-88</a></p>
+									<p><a href="mailto:sany-chita@mail.ru">sany-chita@mail.ru</a>
+									</p>
+									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Экскаватор</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Благовещенск" data-coords="50.305779, 127.555973">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ШанхайСпеТехника»</h4>
+									<p>672038, г. Благовещенск, ул. Трудовая, д. 237</p>
+									<p><a href="tel:+78005509188">+7 (800) 550-91-88</a></p>
+									<p><a href="tel:+79244433555">+7 (924) 443-35-55</a></p>
+									<p><a href="tel:+79246845119">+7 (924) 684-51-19</a></p>
+									<p><a href="mailto:89246845119@mail.ru">89246845119@mail.ru</a>, <a href="mailto:howo_sany@mail.ru">howo_sany@mail.ru</a>
+									</p>
+									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Экскаватор</li>
+									</ul>
+								</div>
+							</div>
+							<div class="contacts-item" data-city="Красноярск" data-coords="56.068645, 92.991478">
+								<div class="contacts-card">
+									<h4 class="caption">ООО «ШанхайСпеТехника»</h4>
+									<p>660055, г. Красноярск, Металлургов, д. 1 м, ст. 4, офис 2-08</p>
+									<p><a href="tel:+78005509188">+7 (800) 550-91-88</a>, <a href="tel:+79332001122">+7 (933) 200-11-22</a>
+									</p>
+									<p><a href="mailto:sany_krsk@mail.ru">sany_krsk@mail.ru</a>
+									</p>
+									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
+									</p>
+									<p>Продукция:</p>
+									<ul>
+										<li>Экскаватор</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
