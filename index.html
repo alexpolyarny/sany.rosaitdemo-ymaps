@@ -31,8 +31,7 @@
 			line-height: 21px;
 		}
 		a {
-			color: #131315;
-			text-decoration: none;
+			color: #e60012;
 			-webkit-transition: all 0.3s;
 			-o-transition: all 0.3s;
 			transition: all 0.3s;
@@ -42,7 +41,7 @@
 			color: #e60012;
 		}
 		h1, h2, h3, h4, h5, h6 {
-			font-weight: bold;
+			font-weight: 600;
 			color: #131315;
 		}
 		.wrapper {
@@ -56,8 +55,8 @@
 			flex-direction: column;
 			width: 100%;
 			min-height: 100vh;
-		    padding: 0 0 70px;
-    		background: #f3f3f3;
+			padding: 0 0 70px;
+			background: #f3f3f3;
 			overflow: hidden;
 		}
 		.container {
@@ -151,7 +150,7 @@
 		.contacts-card h4 {
 			font-size: 18px;
 			line-height: 24px;
-			font-weight: bold;
+			font-weight: 600;
 		}
 		.contacts-card p {
 			padding-bottom: 5px;
@@ -159,21 +158,101 @@
 			line-height: 21px;
 			color: #616161;
 		}
+		.contacts-card strong {
+			display: block;
+			padding-top: 8px;
+			font-weight: 600;
+		}
 		.contacts-card ul {
 			list-style-position: inside;
+		}
+		.contacts-card ul li::marker {
+			color: #e60012;
 		}
 		ymaps .contacts-card {
 			padding: 0;
 		}
 		ymaps .contacts-card h4 {
+			font-family: 'Montserrat', sans-serif;
 			font-size: 14px;
-			padding-bottom: 10px;
+			padding-bottom: 0;
 		}
 		ymaps .contacts-card p,
 		ymaps .contacts-card ul li {
-			color: #131315;
+			font-family: 'Montserrat', sans-serif;
+			color: #303030;
 			font-size: 12px;
-			line-height: 14px;
+			line-height: 15px;
+			padding-right: 5px;
+		}
+		@media screen and (min-width: 576px) {
+			ymaps[class*="-balloon "] {
+				box-shadow: 0 5px 15px -7px rgb(0 0 0 / 50%)!important;
+				border-radius: 15px;
+			}
+		}
+		ymaps[class*="-balloon__layout"] {
+			border-radius: 15px;
+		}
+		ymaps[class*="balloon_layout_normal"] [class*="balloon__content"]{
+			padding: 15px!important;
+		}
+		ymaps[class*="cluster-carousel"] [class*="balloon__content"]{
+			padding: 10px 12px 0!important;
+		}
+		ymaps[class*="cluster-carousel__pager-item"] {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 14px!important;
+			font-weight: 600!important;
+			color: #7a7a7a!important;
+			padding: 8px 2px 0px!important;
+		}
+		ymaps[class*="cluster-carousel__pager-item_current_yes"] {
+			color: #e60012!important;
+		}
+		ymaps[class*="cluster-carousel__pager-item_current_yes"]:before {
+			display: none!important;
+		}
+		ymaps[class*="balloon__close"] {
+			width: 22px;
+			height: 22px;
+			padding: 3px;
+			margin: 10px 10px -40px!important;
+			border-radius: 50%;
+			border: 1px solid #dbdbdb;
+		}
+		ymaps[class*="balloon__close-button"] {
+			width: 22px!important;
+			height: 22px!important;
+			margin: 0!important;
+			padding: 0!important;
+			border: none!important;
+			background-size: 10px 10px!important;
+		}
+		ymaps[class*="cluster-carousel__separator"] {
+			background: #dbdbdb!important;
+		}
+		ymaps[class*="cluster-carousel__separator"]:before {
+			background: -webkit-gradient(linear,left top,right top,color-stop(0%,#dbdbdb),color-stop(100%,#ccc));
+			background: -webkit-linear-gradient(left,#fff 0%,#dbdbdb 100%);
+			background: linear-gradient(to right,#fff 0%,#dbdbdb 100%);		
+		}
+		ymaps[class*="cluster-carousel__separator"]:after {
+			background: -webkit-gradient(linear,left top,right top,color-stop(0%,#dbdbdb),color-stop(100%,#fff))!important;
+			background: -webkit-linear-gradient(left,#dbdbdb 0%,#fff 100%)!important;
+			background: linear-gradient(to right,#dbdbdb 0%,#fff 100%)!important;
+		}
+		ymaps[class*="cluster-carousel__content"]:after {
+			content: '';
+			display: block;
+			position: absolute;
+			right: 0px;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			width: 10px;
+			height: 100%;
+			background: #FFF;
 		}
 	</style>
 </head>
@@ -196,7 +275,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -214,7 +293,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -233,7 +312,7 @@
 									</p>
 									<p><a href="https://merko-russland.com/">https://merko-russland.com/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Асфальтобетонные заводы</li>
 										<li>Бетоносмесительные установки</li>
@@ -274,7 +353,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -309,7 +388,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -328,7 +407,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -347,7 +426,7 @@
 									</p>
 									<p><a href="www.sant-rf.com">www.sant-rf.com</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Буровые установки</li>
 									</ul>
@@ -368,7 +447,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a> 
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -387,7 +466,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -406,7 +485,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -425,7 +504,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -444,7 +523,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -463,7 +542,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -498,7 +577,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -518,7 +597,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -544,7 +623,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -563,7 +642,7 @@
 									</p>
 									<p><a href="https://psk-holding.ru/">https://psk-holding.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Автобетононасосы</li>
 										<li>Стационарные бетононасосы</li>
@@ -582,7 +661,7 @@
 									</p>
 									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Экскаватор</li>
 									</ul>
@@ -600,7 +679,7 @@
 									</p>
 									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Экскаватор</li>
 									</ul>
@@ -617,7 +696,7 @@
 									</p>
 									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Экскаватор</li>
 									</ul>
@@ -633,7 +712,7 @@
 									</p>
 									<p><a href="https://sany-sse.ru/">https://sany-sse.ru/</a>
 									</p>
-									<p>Продукция:</p>
+									<p><strong>Продукция:</strong></p>
 									<ul>
 										<li>Экскаватор</li>
 									</ul>

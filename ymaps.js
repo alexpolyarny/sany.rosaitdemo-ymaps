@@ -29,8 +29,8 @@ function init() {
 	for (j = 0; j < db.length; j++) {
 		collection.add(new ymaps.Placemark(db[j].coords, {
 			hintContent: db[j].city,
-			clusterCaption: '<h2>' + db[j].city + '</h2>',
-			balloonContentHeader: db[j].city,
+			//clusterCaption: '<h2>' + db[j].city + '</h2>',
+			//balloonContentHeader: db[j].city,
 			balloonContent: db[j].content,
 		}, {
 			preset: 'islands#redDotIcon',
@@ -105,8 +105,8 @@ function init() {
 	function setColors(collection, color) {
 		collection.setStyles(function (object) {
 			return ({
-			    fillColor: color,
-			    opacity: 0.5
+				fillColor: color,
+				opacity: 0.5
 			});
 		})
 	};
