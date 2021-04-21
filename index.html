@@ -221,6 +221,11 @@
 			border-radius: 50%;
 			border: 1px solid #dbdbdb;
 		}
+		@media screen and (max-width: 576px) {
+			ymaps[class*="balloon__close"] {
+				margin: 10px 5px -40px!important;
+			}		
+		}
 		ymaps[class*="balloon__close-button"] {
 			width: 22px!important;
 			height: 22px!important;
@@ -242,7 +247,8 @@
 			background: -webkit-linear-gradient(left,#dbdbdb 0%,#fff 100%)!important;
 			background: linear-gradient(to right,#dbdbdb 0%,#fff 100%)!important;
 		}
-		ymaps[class*="cluster-carousel__content"]:after {
+		ymaps[class*="cluster-carousel__content"]:after,
+		ymaps[class*="-balloon__content"]:after {
 			content: '';
 			display: block;
 			position: absolute;
