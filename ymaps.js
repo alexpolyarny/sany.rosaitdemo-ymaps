@@ -113,131 +113,131 @@ function init() {
 
 	// Формируем и добавляем регионы в коллекцию	
 	/* Центральный округ */
-	osmeRegions.geoJSON(cfo[0], {
+	osme.geoJSON(cfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == cfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, cfo[1]);
 		collection.add(map);
 	});
 
 	/* Северо-Западный округ */
-	osmeRegions.geoJSON(szfo[0], {
+	osme.geoJSON(szfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == szfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, szfo[1]);
 		collection.add(map);
 	});
 
 	/* Южный округ */
-	osmeRegions.geoJSON(yfo[0], {
+	osme.geoJSON(yfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == yfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, yfo[1]);
 		collection.add(map);
 	});
 
 	/* Приволжский округ */
-	osmeRegions.geoJSON(pfo[0], {
+	osme.geoJSON(pfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == pfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, pfo[1]);
 		collection.add(map);
 	});
 
 	/* Уральский округ */
-	osmeRegions.geoJSON(urfo[0], {
+	osme.geoJSON(urfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == urfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, urfo[1]);
 		collection.add(map);
 	});
 
 	/* Сибирский округ */
-	osmeRegions.geoJSON(sfo[0], {
+	osme.geoJSON(sfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == sfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, sfo[1]);
 		collection.add(map);
 	});
 
 	/* Дальневосточный округ */
-	osmeRegions.geoJSON(dfo[0], {
+	osme.geoJSON(dfo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == dfo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, dfo[1]);
 		collection.add(map);
 	});
 
 	/* Грузия */
-	osmeRegions.geoJSON(geo[0], {
+	osme.geoJSON(geo[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == geo[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, geo[1]);
 		collection.add(map);
 	});
 
 	/* Украина */
-	osmeRegions.geoJSON(ukr[0], {
+	osme.geoJSON(ukr[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == ukr[0];
 		}
 	}, function(data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, ukr[1]);
 		collection.add(map);
 	});
 
 	/* Беларусь */
-	osmeRegions.geoJSON(bel[0], {
+	osme.geoJSON(bel[0], {
 		lang: 'ru', 
 		quality: 0,
 		postFilter: function(region) {
 			return region.osmId == bel[0];
 		}
 	}, function (data, pure) {
-		collection = osmeRegions.toYandex(data, ymaps);
+		collection = osme.toYandex(data, ymaps);
 		setColors(collection, bel[1]);
 		collection.add(map);
 	});
